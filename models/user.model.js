@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const { isEmail } = require('validator')
+const bycrypt = require('bcrypt')
 
 const userSchema = new mongoose.Schema (
     {
@@ -46,6 +47,14 @@ const userSchema = new mongoose.Schema (
         timestamps: true,  // Pour avoir la date de l'inscription
     }
 );
+
+// Function avant de save dans la bdd tu me crypter le mot de passe
+// pour utiliser le this on ne peut pas faire une fonction fléché (()=>)
+userSchema.pre("save", async function(next){
+    const salt = await bycrypt.genSalt();
+    this.password = await bycrypt.hash(this.password, salt);
+    next();
+} )
 
 const UserModel = mongoose.model('user', userSchema);
 
