@@ -15,7 +15,7 @@ const authController =  {
             const errors = signUpErrors(err);
             res.status(400).send({errors})
         }
-    }
+    }, 
 }
 
 module.exports = authController;
