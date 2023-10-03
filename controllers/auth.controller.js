@@ -1,4 +1,4 @@
-const { userModel } = require ('../models');
+const { UserModel } = require ('../models');
 const { signUpErrors } = require('../utils/error.utils')
 
 const authController =  {
@@ -7,7 +7,7 @@ const authController =  {
         console.log({pseudo, email, password });
 
         try {
-            const user = await userModel.create({pseudo, email, password});
+            const user = await UserModel.create({pseudo, email, password});
             res.status(200).json({Message: 'Vous êtes inscrit', userId: user._id, userPseudo: user.pseudo})
         }
         catch (err) {

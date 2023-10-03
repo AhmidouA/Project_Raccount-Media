@@ -1,4 +1,4 @@
-const { userModel } = require("../models");
+const { UserModel } = require("../models");
 
 // vérification ID par BD
 const ObjectID = require('mongoose').Types.ObjectId
@@ -6,7 +6,7 @@ const ObjectID = require('mongoose').Types.ObjectId
 
 const userController = {
     async getAllUsers (req, res) {
-        const users = await userModel.find().select('-password'); // Send All with out password
+        const users = await UserModel.find().select('-password'); // Send All with out password
         res.status(200).json(users);
         
     },
@@ -18,7 +18,7 @@ const userController = {
         }
     
         try {
-            const user = await userModel.findById(req.params.id).select('-password');
+            const user = await UserModel.findById(req.params.id).select('-password');
             if (!user) {
                 return console.log(`ID unknown: ${req.params.id}`);
             }    
@@ -37,7 +37,7 @@ const userController = {
         };
 
         try {
-            const user = await userModel.findOneAndUpdate({_id: req.params.id}, {$set: {bio: req.body.bio}}, 
+            const user = await UserModel.findOneAndUpdate({_id: req.params.id}, {$set: {bio: req.body.bio}}, 
                 {new: true, upsert: true, setDefaultsOnInsert:true});
 
             if (!user) {
@@ -58,7 +58,7 @@ const userController = {
         };
 
         try {
-            const user = await userModel.deleteOne({_id: req.params.id});
+            const user = await UserModel.deleteOne({_id: req.params.id});
 
             if (!user) {
                 return res.status(500).json({message: err});
@@ -83,14 +83,14 @@ const userController = {
     
         try {
             // Ajouter l'utilisateur à la liste des following (les gens que je suis)
-            const user = await userModel.findByIdAndUpdate(req.params.id, { $addToSet: { following: req.body.idToFollow }});
+            const user = await UserModel.findByIdAndUpdate(req.params.id, { $addToSet: { following: req.body.idToFollow }});
     
             if (!user) {
                 return res.status(404).json({ message: 'User not found' });
             }
     
             // Ajouter l'utilisateur à la liste des followers (les gens qui me suivent)
-            const userFollowing = await userModel.findByIdAndUpdate(req.body.idToFollow, { $addToSet: { followers: req.params.id }});
+            const userFollowing = await UserModel.findByIdAndUpdate(req.body.idToFollow, { $addToSet: { followers: req.params.id }});
             res.status(200).json({
                 user: user.pseudo,
                 message: `Vous avez bien ajouté l'ID ${req.body.idToFollow} à vos following ${user.pseudo}`
@@ -118,7 +118,7 @@ const userController = {
     
         try {
             // Retirer l'utilisateur de la liste des followers (les gens que je suis)
-            const user = await userModel.findByIdAndUpdate(req.params.id, { $pull: { following: req.body.idToUnFollow } });
+            const user = await UserModel.findByIdAndUpdate(req.params.id, { $pull: { following: req.body.idToUnFollow } });
             console.log("user", user)
     
             if (!user) {
@@ -126,7 +126,7 @@ const userController = {
             }
     
             // Retirer l'utilisateur de la liste des following (les gens qui me suivent)
-            const userUnFollowing = await userModel.findByIdAndUpdate(req.body.idToUnFollow, { $pull: { followers: req.params.id } });
+            const userUnFollowing = await UserModel.findByIdAndUpdate(req.body.idToUnFollow, { $pull: { following: req.params.id } });
             console.log("userUnFollowing", userUnFollowing)
                 
             res.status(200).json({
