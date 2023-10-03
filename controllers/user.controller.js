@@ -44,13 +44,31 @@ const userController = {
                 return res.status(500).json({message: err})
             }
             return res.json(user);
-            
+
         } catch (err) {
+            console.error("err", err)
+            return res.status(500).json({message: err})
+        }
+    },
+
+    async deleteUser (req, res) {
+        console.log("req.params", req.params);
+        if (!ObjectID.isValid(req.params.id)){
+            return res.status(400).json(`ID unknown: ${req.params.id}`)
+        };
+
+        try {
+            const user = await userModel.deleteOne({_id: req.params.id});
+            res.status(200).json({message: "Successfully deleted"})
+
+        } catch (err){
+            console.error("err", err)
             return res.status(500).json({message: err})
 
         }
-
     }
+
+
 };
 
 module.exports = userController;
