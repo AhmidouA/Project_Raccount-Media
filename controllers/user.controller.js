@@ -1,7 +1,7 @@
 const { userModel } = require("../models");
 
 // vérification ID par BD
-const ObejectID = require('mongoose').Types.ObjectId
+const ObjectID = require('mongoose').Types.ObjectId
 
 
 const userController = {
@@ -11,18 +11,45 @@ const userController = {
         
     },
 
-    async getUser (req, res) {
+    async getUser(req, res) {
         console.log("req.params", req.params);
-        if (!ObejectID.isValid(req.params.id)){
-            return res.status(400).send(`ID unknown: ${req.params.id}`)
+        if (!ObjectID.isValid(req.params.id)) {
+            return res.status(400).json(`ID unknown: ${req.params.id}`);
+        }
+    
+        try {
+            const user = await userModel.findById(req.params.id).select('-password');
+            if (!user) {
+                return console.log(`ID unknown: ${req.params.id}`);
+            }    
+            return res.json(user);
+
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ message: err.message });
+        }
+    },
+
+    async updateUser (req, res) {
+        console.log("req.params", req.params);
+        if (!ObjectID.isValid(req.params.id)){
+            return res.status(400).json(`ID unknown: ${req.params.id}`)
         };
-        userModel.findById(req.params.id, (err, docs => {
-            if (!err) {
-                res.send(docs); // docs = data    
-            } else {
-                console.log(`ID unknown: ${req.params.id}`)
+
+        try {
+            const user = await userModel.findOneAndUpdate({_id: req.params.id}, {$set: {bio: req.body.bio}}, 
+                {new: true, upsert: true, setDefaultsOnInsert:true});
+
+            if (!user) {
+                return res.status(500).json({message: err})
             }
-        })).select('-password');
+            return res.json(user);
+            
+        } catch (err) {
+            return res.status(500).json({message: err})
+
+        }
+
     }
 };
 
