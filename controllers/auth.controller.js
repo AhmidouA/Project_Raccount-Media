@@ -49,6 +49,8 @@ const authController =  {
     },
 
     async logout (req, res) {
+        res.cookie('jwt', '', {maxAge: 1 }) // 1miliseconde
+        res.redirect('/')
 
     },
 }
