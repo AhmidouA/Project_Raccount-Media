@@ -24,7 +24,7 @@ const authController =  {
         }
         catch (err) {
             console.error("err", err)
-            const errors = signInErrors(err);
+            const errors = signUpErrors(err);
             res.status(400).send({errors})
         }
     }, 
@@ -43,7 +43,7 @@ const authController =  {
 
         } catch (err) {
             console.error("err", err)
-            const errors = signUpErrors(err);
+            const errors = signInErrors(err);
             res.status(400).send({errors})
         }
     },
