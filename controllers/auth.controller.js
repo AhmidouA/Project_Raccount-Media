@@ -1,5 +1,5 @@
 const { UserModel } = require ('../models');
-const { signUpErrors } = require('../utils/error.utils')
+const { signUpErrors, signInErrors } = require('../utils/error.utils')
 const jwt = require("jsonwebtoken");
 
 
@@ -24,7 +24,7 @@ const authController =  {
         }
         catch (err) {
             console.error("err", err)
-            const errors = signUpErrors(err);
+            const errors = signInErrors(err);
             res.status(400).send({errors})
         }
     }, 
