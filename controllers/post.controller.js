@@ -8,7 +8,8 @@ const postController = {
     async readPost (req, res) {
        const posts = await PostModel.find();
        try {
-        res.status(200).json(posts);
+        res.status(200).json(posts).sort({createdAt: -1}); // on verra les post du + recents au + anciens
+
        } catch (err) {
         console.error(err);
         res.status(400).json({ message: err.message });
@@ -143,8 +144,7 @@ const postController = {
 
     async commentPost (req, res) {
         console.log("req.params", req.params);
-        console.log("req.body", req.body);
-    
+        console.log("req.body", req.body);  
         // Vérification si l'ID de l'utilisateur existe et si l'utilisateur que vous voulez suivre existe aussi
         if (!ObjectID.isValid(req.params.id)) {
             return res.status(400).json({ message: 'ID inconnu' });
@@ -178,10 +178,57 @@ const postController = {
     },
 
     async editCommentPost (req, res) {
+        console.log("req.params", req.params);
+        console.log("req.body", req.body);  
+        // Vérifiez que l'ID est valide
+        if (!ObjectID.isValid(req.params.id))
+        return res.status(400).send("ID unknown : " + req.params.id);
 
+        try {
+            const post = await PostModel.findById(req.params.id);
+            if (!post) {
+                return res.status(404).json({ message: "Article non trouvé" });
+              }
+            console.log("post", post)
+
+            const theComment = post.comments.find((comment) =>
+              comment._id.equals(req.body.commentId) // envoyer l'id du comment et non l'id de l'user ATTENTION
+                );
+
+            console.log("theComment", theComment)
+            if (!theComment) {
+                return res.status(404).json({ message: "Commentaire non trouvé" });
+            }
+
+
+            theComment.text = req.body.text;
+            console.log("theComment TEXT", theComment.text)
+
+            const updatedPost = await post.save();
+            console.log("updatedPost ", updatedPost)
         
+            return res.status(201).json(updatedPost);
+          } catch (err) {
+            console.error("Erreur Edit Commentaire Post: ", err);
+            return res.status(500).json(err);
+          }
     },
+      
     async deleteCommentPost (req, res) {
+        console.log("req.params", req.params);
+        console.log("req.body", req.body);
+        // Vérification si l'ID de l'utilisateur existe et si l'utilisateur que vous voulez suivre existe aussi
+        if (!ObjectID.isValid(req.params.id)) {
+            return res.status(400).json({ message: 'ID inconnu' });
+        };
+
+
+        try {
+
+        } catch (err) {
+         console.error("commentPost error : " + err);
+         res.status(400).json({ message: err.message });
+     } 
 
     },
 
