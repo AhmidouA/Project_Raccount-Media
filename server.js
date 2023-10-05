@@ -21,7 +21,7 @@ app.use(cookieParser());
 
 
 // Router
-const {userRouter} = require ('./routes')
+const {userRouter, postRouter} = require ('./routes')
 
 
 // PORT
@@ -36,6 +36,7 @@ app.get('/jwtid', authMiddleware.requireAuth, (req, res) => {
 
 // routes
 app.use('/api/user', userRouter)
+app.use('/api/post', postRouter)
 
 
 app.listen(PORT, () => {

@@ -1,3 +1,4 @@
+// Model bdd
 const { UserModel } = require("../models");
 
 // vérification ID par BD
@@ -14,26 +15,26 @@ const userController = {
     async getUser(req, res) {
         console.log("req.params", req.params);
         if (!ObjectID.isValid(req.params.id)) {
-            return res.status(400).json(`ID unknown: ${req.params.id}`);
+            return res.status(400).json(`ID Inconnu: ${req.params.id}`);
         }
     
         try {
             const user = await UserModel.findById(req.params.id).select('-password');
             if (!user) {
-                return console.log(`ID unknown: ${req.params.id}`);
+                return console.log(`ID Inconnu: ${req.params.id}`);
             }    
             return res.json(user);
 
         } catch (err) {
             console.error(err);
-            res.status(500).json({ message: err.message });
+            res.status(400).json({ message: err.message });
         }
     },
 
     async updateUser (req, res) {
         console.log("req.params", req.params);
         if (!ObjectID.isValid(req.params.id)){
-            return res.status(400).json(`ID unknown: ${req.params.id}`);
+            return res.status(400).json(`ID Inconnu: ${req.params.id}`);
         };
 
         try {
@@ -41,33 +42,33 @@ const userController = {
                 {new: true, upsert: true, setDefaultsOnInsert:true});
 
             if (!user) {
-                return res.status(500).json({message: err});
+                return res.status(400).json({message: err});
             }
-            return res.json(user);
+            return res.status(201).json(user);
 
         } catch (err) {
             console.error("err", err);
-            return res.status(500).json({message: err});
+            return res.status(400).json({message: err});
         }
     },
 
     async deleteUser (req, res) {
         console.log("req.params", req.params);
         if (!ObjectID.isValid(req.params.id)){
-            return res.status(400).json(`ID unknown: ${req.params.id}`);
+            return res.status(400).json(`ID Inconnu: ${req.params.id}`);
         };
 
         try {
             const user = await UserModel.deleteOne({_id: req.params.id});
 
             if (!user) {
-                return res.status(500).json({message: err});
+                return res.status(400).json({message: err});
             };
-            res.status(200).json({message: "Successfully deleted"});
+            res.status(200).json({message: "Supprimé avec succès"});
 
         } catch (err){
             console.error("err", err);
-            return res.status(500).json({message: err});
+            return res.status(400).json({message: err});
 
         }
     },
