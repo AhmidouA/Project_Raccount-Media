@@ -189,7 +189,6 @@ const postController = {
             if (!post) {
                 return res.status(404).json({ message: "Article non trouvé" });
               }
-            console.log("post", post)
 
             const theComment = post.comments.find((comment) =>
               comment._id.equals(req.body.commentId) // envoyer l'id du comment et non l'id de l'user ATTENTION
@@ -199,18 +198,14 @@ const postController = {
             if (!theComment) {
                 return res.status(404).json({ message: "Commentaire non trouvé" });
             }
-
-
             theComment.text = req.body.text;
-            console.log("theComment TEXT", theComment.text)
 
             const updatedPost = await post.save();
-            console.log("updatedPost ", updatedPost)
         
             return res.status(201).json(updatedPost);
           } catch (err) {
             console.error("Erreur Edit Commentaire Post: ", err);
-            return res.status(500).json(err);
+            res.status(400).json({ message: err.message });
           }
     },
       
@@ -222,8 +217,20 @@ const postController = {
             return res.status(400).json({ message: 'ID inconnu' });
         };
 
-
         try {
+            const deleteCommentPost = await PostModel.findByIdAndUpdate(req.params.id, 
+                {$pull: {
+                    comments: {
+                        _id: req.body.commentId
+                        }
+                    }
+                },{new: true})
+            
+            if (!deleteCommentPost) {
+                return res.status(404).json({ message: "Commentaire Post non trouvé" });
+            };
+
+            return res.status(201).json({deleteCommentPost, message:"le Commentaire du Post a bien été supprimé " })
 
         } catch (err) {
          console.error("commentPost error : " + err);
