@@ -141,6 +141,49 @@ const postController = {
           }
     },
 
+    async commentPost (req, res) {
+        console.log("req.params", req.params);
+        console.log("req.body", req.body);
+    
+        // Vérification si l'ID de l'utilisateur existe et si l'utilisateur que vous voulez suivre existe aussi
+        if (!ObjectID.isValid(req.params.id)) {
+            return res.status(400).json({ message: 'ID inconnu' });
+        };
+
+        try {
+            const commentPost = await PostModel.findByIdAndUpdate(req.params.id, 
+                {$push: 
+                    {
+                    comments: {
+                        commnenterId: req.body.commnenterId,
+                        commnenterPseudo: req.body.commnenterPseudo,
+                        text: req.body.text,
+                        timestamp: new Date().getTime() // timestamps manuelle
+                            }
+                        }
+                },
+                { new: true });
+                console.log("commentPost", commentPost)
+
+            if (!commentPost) {
+                return res.status(400).json({message: "Erreur lors du comment post"})
+            }
+            return res.status(201).json(commentPost); 
+
+        } catch (err) {
+            console.error("commentPost error : " + err);
+            res.status(400).json({ message: err.message });
+        }
+
+    },
+
+    async editCommentPost (req, res) {
+
+    },
+    async deleteCommentPost (req, res) {
+
+    },
+
 };
 
 module.exports = postController;

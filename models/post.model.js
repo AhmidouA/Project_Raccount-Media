@@ -27,7 +27,7 @@ const PostSchema = new mongoose.Schema(
                     commnenterId: String,
                     commnenterPseudo: String,
                     text: String,
-                    timestamps: Number,
+                    timestamp: Number,
                 }
             ],
             required: true
