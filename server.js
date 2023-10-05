@@ -9,6 +9,13 @@ require("dotenv").config({ path: "./config/.env" });
 // mongoose config
 require("./config/db");
 
+
+// les cors pour l'appel a l'Api
+const cors = require("cors");
+// middleware par default pour permettre d'appeler l'api (Tout le monde par default)
+app.use(cors());
+
+
 // middleware service
 const { authMiddleware } = require("./middleware");
 
