@@ -1,3 +1,4 @@
+// Error Login
 module.exports.signUpErrors = (err) => {
   let errors = { pseudo: "", email: "", password: "" };
 
@@ -22,6 +23,7 @@ module.exports.signUpErrors = (err) => {
   return errors;
 };
 
+// Error SignIn
 module.exports.signInErrors = (err) => {
   let errors = {email: "", password: ""};
 
@@ -30,6 +32,19 @@ module.exports.signInErrors = (err) => {
   
   if (err.message.includes("password"))
   errors.password = "Le mot de passe ne correspond pas"
+
+  return errors
+}
+
+// Error multer uplaod and stream
+module.exports.uploadErrors = (err) => {
+  let errors = {format: "", maxSize: ""}
+
+  if (err.message.includes("invalid file"))
+    errors.format= "Format incompatible"
+
+    if (err.message.includes("max size"))
+    errors.maxSize= "Le ficher dépasse 500ko"
 
   return errors
 }
