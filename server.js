@@ -12,8 +12,18 @@ require("./config/db");
 
 // les cors pour l'appel a l'Api
 const cors = require("cors");
-// middleware par default pour permettre d'appeler l'api (Tout le monde par default)
-app.use(cors());
+
+// option pour mes request API (uniquement moi) => l'url peut etre le site web
+const corsOptions = {
+  origin: process.env.CLIENT_URL,
+  credentials: true,
+  'allowedHeaders': ['sessionId', 'Content-Type'],
+  'exposedHeaders': ['sessionId'],
+  'methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  'preflightContinue': false
+}
+// middleware par default pour permettre d'appeler l'api (Uniquement ce qui ont le droit => client )
+app.use(cors(corsOptions));
 
 
 // middleware service
