@@ -36,15 +36,16 @@ const authController =  {
         try {
             // login vient de la methode userModel (tout en bas)
             const user = await UserModel.login(email, password);
-            // console.log("user", user)
+
+            console.log("user", user)
             const token = createToken(user._id)
             res.cookie('jwt', token, {httpOnly: true, maxAge: maxAge})
-            res.status(200).json({user: user._id})
+            res.status(200).json({user: user._id, userPseudo: user.pseudo})
 
         } catch (err) {
             console.error("err", err)
             const errors = signInErrors(err);
-            res.status(400).send({errors})
+            res.status(400).json({errors})
         }
     },
 
