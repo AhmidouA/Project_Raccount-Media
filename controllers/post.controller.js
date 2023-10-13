@@ -139,7 +139,7 @@ const postController = {
 
     async unLikePost (req, res) {
         console.log("req.params", req.params);
-        console.log("req.body.idToLike", req.body);
+        console.log("req.body.idToUnLike", req.body);
     
         // Vérification si l'ID de l'utilisateur existe et si l'utilisateur que vous voulez suivre existe aussi
         if (!ObjectID.isValid(req.params.id)) {

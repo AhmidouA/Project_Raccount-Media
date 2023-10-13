@@ -9,7 +9,6 @@ require("dotenv").config({ path: "./config/.env" });
 // mongoose config
 require("./config/db");
 
-
 // les cors pour l'appel a l'Api
 const cors = require("cors");
 
@@ -24,7 +23,6 @@ const corsOptions = {
 }
 // middleware par default pour permettre d'appeler l'api (Uniquement ce qui ont le droit => client )
 app.use(cors(corsOptions));
-
 
 // middleware service
 const { authMiddleware } = require("./middleware");
@@ -53,6 +51,6 @@ app.use("/api/post", postRouter);
 
 app.listen(PORT, () => {
   console.log(
-    `Listening on Social-Media-back on PORT ${process.env.PORT} || 3000`
+    `Listening on Social-Media-back on PORT ${process.env.PORT} || 5000`
   );
 });
