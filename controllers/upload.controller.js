@@ -13,10 +13,6 @@ const uploadController = {
             throw Error("Format de fichier invalide");
         }
         
-        // Vérifie si la taille du fichier dépasse la limite maximale de 500 000 octets (500 Ko)
-        if (req.file.size > 500000) {
-            throw Error("La taille du fichier dépasse la limite maximale");
-        }
 
         // récupere le chemin de l'image uploadée
         const file = req.file.filename;
@@ -29,11 +25,16 @@ const uploadController = {
                 { new: true, upsert: true, setDefaultsOnInsert: true }
             );
 
+            console.log("user", user)
+
             if (!user) {
-                return res.status(400).json({ message: "La photo n'a pas pu être enregistrée dans la base de données" });
+                res.status(400).json({ message: "La photo n'a pas pu être enregistrée dans la base de données" });
             }
         
-            return res.status(201).json({ user, message: "La photo a été enregistrée dans la base de données" });
+            return res.status(201).json({
+                user,
+                message: "La photo a été enregistrée dans la base de données"
+              });
         } catch (err) {
             console.error("err Picture add", err)
             return res.status(500).json({ message: err.message });

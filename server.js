@@ -14,6 +14,7 @@ const cors = require("cors");
 
 // option pour mes request API (uniquement moi) => l'url peut etre le site web
 const corsOptions = {
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   origin: process.env.CLIENT_URL,
   credentials: true,
   'allowedHeaders': ['sessionId', 'Content-Type'],
@@ -23,6 +24,7 @@ const corsOptions = {
 }
 // middleware par default pour permettre d'appeler l'api (Uniquement ce qui ont le droit => client )
 app.use(cors(corsOptions));
+
 
 // middleware service
 const { authMiddleware } = require("./middleware");

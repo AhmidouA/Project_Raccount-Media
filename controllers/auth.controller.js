@@ -51,7 +51,7 @@ const authController =  {
 
     async logout (req, res) {
         res.cookie('jwt', '', {maxAge: 1 }) // 1miliseconde
-        res.redirect('/')
+        res.status(200).json({Message: "vous étes bien déconnecté"})
 
     },
 }
