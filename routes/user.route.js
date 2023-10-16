@@ -25,6 +25,8 @@ router.patch('/unfollow/:id', userController.unfollow);
 
 //uplaod
 router.post('/upload', upload.single('file'), uploadController.uploadProfil);
+router.get('/upload/picture/:file', uploadController.streamPicture);
+
 
 
 module.exports = router;
