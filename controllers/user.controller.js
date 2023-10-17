@@ -97,14 +97,15 @@ const userController = {
         req.body.idToFollow,
         { $addToSet: { followers: req.params.id } }
       );
-      res.status(200).json({
-        user: user.pseudo,
-        message: `Vous avez bien ajouté l'ID ${req.body.idToFollow} à vos following ${user.pseudo}`,
-      });
 
       if (!userFollowing) {
         return res.status(404).json({ message: "User to follow not found" });
       }
+
+      res.status(200).json({
+        user: user.pseudo,
+        message: `Vous avez bien ajouté l'ID ${req.body.idToFollow} à vos following ${user.pseudo}`,
+      });
     } catch (err) {
       console.error("err", err);
       return res.status(500).json({ message: err.message });
