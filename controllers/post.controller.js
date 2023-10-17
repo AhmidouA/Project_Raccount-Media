@@ -6,16 +6,16 @@ const ObjectID = require('mongoose').Types.ObjectId
 
 const postController = {
     async readPost (req, res) {
-       const posts = await PostModel.find();
-       try {
-        res.status(200).json(posts).sort({createdAt: -1}); // on verra les post du + recents au + anciens
-
-       } catch (err) {
+      try {
+        const posts = await PostModel.find().sort({ createdAt: -1 }); // Triez les posts du plus récent au plus ancien
+        res.status(200).json({ posts });
+      } catch (err) {
         console.error(err);
         res.status(400).json({ message: err.message });
-       }       
-    }, 
+      }
+    },
 
+    
     async createPost (req, res) {
 
       console.log("posterId:", req.body.posterId);
