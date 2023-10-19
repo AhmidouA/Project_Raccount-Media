@@ -7,9 +7,10 @@ const { userController, authController, postController } = require("../controlle
 
 // post
 router.get('/', postController.readPost);
-router.post('/', uploadPost.single('file'), postController.createPost);
 router.put('/:id', postController.updatePost);
 router.delete('/:id', postController.deletePost);
+router.post('/', uploadPost.single('file'), postController.createPost);
+router.get('/picture/post/:file', postController.streamPicture);
 
 // like post
 router.patch('/like-post/:id', postController.likePost);

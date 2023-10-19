@@ -1,5 +1,6 @@
 // Model bdd
 const { UserModel, PostModel } = require("../models");
+const fs = require("fs");
 
 // vérification ID par BD
 const ObjectID = require('mongoose').Types.ObjectId
@@ -37,7 +38,10 @@ const postController = {
       if (req.file.size > 500000) {
           throw Error("La taille du fichier dépasse la limite maximale");
       }
-      fileName = req.body.posterId + Date.now() + '.jpg'
+      // change la date de miliseconde en mode date + heure + minute
+      const now = new Date().toISOString().slice(0, 16).replace("T", "").replace(/ /g, '-').replace(/:/g, '-');
+      console.log("now", now)
+      fileName = req.body.posterId + now + ".jpg"
       }
         const newPost = new PostModel ({
             posterId: req.body.posterId,
@@ -56,7 +60,14 @@ const postController = {
             console.error(err);
             res.status(400).json({ message: err.message });
            }
-    }, 
+    },
+  
+      async streamPicture(req, res) {
+        const file = req.params.file;
+        const filePath = `${__dirname}/../client/public/uploads/posts/${file}`;
+        console.log("file dans stream Picture Post.controller", filePath);
+        fs.createReadStream(filePath).pipe(res);
+      },
 
     async updatePost(req, res) {
         console.log("req.params", req.params);
