@@ -39,7 +39,7 @@ const postController = {
           throw Error("La taille du fichier dépasse la limite maximale");
       }
       // change la date de miliseconde en mode date + heure + minute
-      const now = new Date().toISOString().slice(0, 16).replace("T", "").replace(/ /g, '-').replace(/:/g, '-');
+      const now = new Date().toISOString().slice(0, 16).replace("-", "").replace("-", "").replace("T", "").replace(/ /g, '').replace(/:/g, '');
       console.log("now", now)
       fileName = req.body.posterId + now + ".jpg"
       }
@@ -60,6 +60,9 @@ const postController = {
             console.error(err);
             res.status(400).json({ message: err.message });
            }
+           const filePath = `${__dirname}/../client/public/uploads/posts/${fileName}`;
+            console.log("file dans stream Picture Post.controller", filePath);
+            fs.createReadStream(filePath).pipe(res);
     },
   
       async streamPicture(req, res) {
@@ -121,8 +124,8 @@ const postController = {
     },
 
     async likePost  (req, res)  {
-        console.log("req.params", req.params);
-        console.log("req.body.Likers", req.body);
+        console.log("req.params dans likePost", req.params);
+        console.log("req.body.Likers dans likePost", req.body);
         if (!ObjectID.isValid(req.params.id)) {
           return res.status(400).send("ID inconnu : " + req.params.id);
         }
@@ -149,8 +152,8 @@ const postController = {
       
 
     async unLikePost (req, res) {
-        console.log("req.params", req.params);
-        console.log("req.body.idToUnLike", req.body);
+        console.log("req.params dans unLikePost", req.params);
+        console.log("req.body.idToUnLike dans unLikePost", req.body);
     
         // Vérification si l'ID de l'utilisateur existe et si l'utilisateur que vous voulez suivre existe aussi
         if (!ObjectID.isValid(req.params.id)) {

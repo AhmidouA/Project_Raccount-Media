@@ -6,7 +6,7 @@ const multer = require('multer');
 const path = require('path');
 
 // change la date de miliseconde en mode date + heure + minute
-const now = new Date().toISOString().slice(0, 16).replace("T", "").replace(/ /g, '-').replace(/:/g, '-');
+const now = new Date().toISOString().slice(0, 16).replace("-", "").replace("-", "").replace("T", "").replace(/ /g, '').replace(/:/g, '');
 
 // Définir l'objet de stockage pour Multer
 const storage = multer.diskStorage({
