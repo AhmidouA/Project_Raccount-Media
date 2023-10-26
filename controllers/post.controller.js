@@ -180,8 +180,8 @@ const postController = {
     },
 
     async commentPost (req, res) {
-        console.log("req.params", req.params);
-        console.log("req.body", req.body);  
+        console.log("req.params commentPost", req.params);
+        console.log("req.body commentPost", req.body);  
         // Vérification si l'ID de l'utilisateur existe et si l'utilisateur que vous voulez suivre existe aussi
         if (!ObjectID.isValid(req.params.id)) {
             return res.status(400).json({ message: 'ID inconnu' });
@@ -192,8 +192,8 @@ const postController = {
                 {$push: 
                     {
                     comments: {
-                        commnenterId: req.body.commnenterId,
-                        commnenterPseudo: req.body.commnenterPseudo,
+                        commenterId: req.body.commenterId,
+                        commenterPseudo: req.body.commenterPseudo,
                         text: req.body.text,
                         timestamp: new Date().getTime() // timestamps manuelle
                             }
