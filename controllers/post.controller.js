@@ -39,8 +39,15 @@ const postController = {
           throw Error("La taille du fichier dépasse la limite maximale");
       }
       // change la date de miliseconde en mode date + heure + minute
-      const now = new Date().toISOString().slice(0, 16).replace("-", "").replace("-", "").replace("T", "").replace(/ /g, '').replace(/:/g, '');
+      let now = new Date().toISOString().slice(0, 16).replace("-", "").replace("-", "").replace("T", "").replace(/ /g, '').replace(/:/g, '');
       console.log("now", now)
+      // Si now est inférieur à 10, arrondir à 10
+      if (parseInt(now) < 10) {
+        now = '10';
+      } else {
+        now = Math.ceil(parseInt(now) / 10) * 10;
+      }
+
       fileName = req.body.posterId + now + ".jpg"
       }
         const newPost = new PostModel ({
