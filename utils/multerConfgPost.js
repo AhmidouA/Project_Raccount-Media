@@ -23,7 +23,8 @@ const storage = multer.diskStorage({
       if (parseInt(now) < 10) {
         now = '10';
       } else {
-        now = Math.ceil(parseInt(now) / 10) * 10;
+        // math.ceil = arrondit le nombre à l'entier supérieur
+        now = Math.ceil(parseInt(now) / 10) * 10;  //  En multipliant le nombre résultant par 10, vous obtenez un nombre arrondi au multiple de 10 le plus proche
       }
       // Utilisez le nom (pseudo) du champ req.body.name comme nom de fichier
       return cb(null, req.body.posterId + now + ".jpg");

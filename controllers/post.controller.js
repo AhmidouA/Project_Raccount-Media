@@ -45,7 +45,8 @@ const postController = {
       if (parseInt(now) < 10) {
         now = '10';
       } else {
-        now = Math.ceil(parseInt(now) / 10) * 10;
+        // math.ceil = arrondit le nombre à l'entier supérieur
+        now = Math.ceil(parseInt(now) / 10) * 10; //  En multipliant le nombre résultant par 10, vous obtenez un nombre arrondi au multiple de 10 le plus proche
       }
 
       fileName = req.body.posterId + now + ".jpg"
