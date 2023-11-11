@@ -4,15 +4,6 @@ const fs = require("fs");
 
 const uploadController = { 
     async uploadProfil (req, res){
-
-        if (
-            // Vérifie si le type MIME du fichier ne commence pas par "image/"
-            // ou si le type MIME n'est pas l'un des types d'images valides (jpeg, png, jpg)
-            !req.file.mimetype.startsWith("image/") ||
-            !["image/jpeg", "image/png", "image/jpg"].includes(req.file.mimetype)
-        ) {
-            throw Error("Format de fichier invalide");
-        }
         
         // Vérifie si la taille du fichier dépasse la limite maximale de 500 000 octets (500 Ko)
         if (req.file.size > 500000) {

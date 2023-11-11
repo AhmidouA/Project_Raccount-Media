@@ -68,9 +68,6 @@ const postController = {
             console.error(err);
             res.status(400).json({ message: err.message });
            }
-           const filePath = `${__dirname}/../client/public/uploads/posts/${fileName}`;
-            console.log("file dans stream Picture Post.controller", filePath);
-            fs.createReadStream(filePath).pipe(res);
     },
   
       async streamPicture(req, res) {
