@@ -11,7 +11,7 @@ const userController = {
   },
 
   async getUser(req, res) {
-    console.log("req.params", req.params);
+    // console.log("req.params", req.params);
     if (!ObjectID.isValid(req.params.id)) {
       return res.status(400).json(`ID Inconnu: ${req.params.id}`);
     }
@@ -29,7 +29,7 @@ const userController = {
   },
 
   async updateUser(req, res) {
-    console.log("req.params", req.params);
+    // console.log("req.params", req.params);
     if (!ObjectID.isValid(req.params.id)) {
       return res.status(400).json(`ID Inconnu: ${req.params.id}`);
     }
@@ -52,7 +52,7 @@ const userController = {
   },
 
   async deleteUser(req, res) {
-    console.log("req.params", req.params);
+    // console.log("req.params", req.params);
     if (!ObjectID.isValid(req.params.id)) {
       return res.status(400).json(`ID Inconnu: ${req.params.id}`);
     }
@@ -71,8 +71,8 @@ const userController = {
   },
 
   async follow(req, res) {
-    console.log("req.params", req.params);
-    console.log("req.body.idToFollow", req.body);
+    // console.log("req.params", req.params);
+    // console.log("req.body.idToFollow", req.body);
 
     // Vérification si l'ID de l'utilisateur existe et si l'utilisateur que vous voulez suivre existe aussi
     if (
@@ -113,8 +113,8 @@ const userController = {
   },
 
   async unfollow(req, res) {
-    console.log("req.params", req.params);
-    console.log("req.body.idToUnFollow", req.body);
+    // console.log("req.params", req.params);
+    // console.log("req.body.idToUnFollow", req.body);
 
     // Vérification si l'ID du user existe et si l'user que vous voulez unfollow existe aussi
     if (
@@ -129,7 +129,7 @@ const userController = {
       const user = await UserModel.findByIdAndUpdate(req.params.id, {
         $pull: { following: req.body.idToUnFollow },
       });
-      console.log("user", user);
+      // console.log("user", user);
 
       if (!user) {
         return res.status(404).json({ message: "User not found" });
@@ -140,7 +140,7 @@ const userController = {
         req.body.idToUnFollow,
         { $pull: { following: req.params.id } }
       );
-      console.log("userUnFollowing", userUnFollowing);
+      // console.log("userUnFollowing", userUnFollowing);
 
       res.status(200).json({
         user: user.pseudo,
