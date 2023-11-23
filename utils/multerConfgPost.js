@@ -1,3 +1,4 @@
+
 // Importer les modules nécessaires
 // module pour la gestion des images
 const multer = require('multer');
@@ -5,13 +6,12 @@ const multer = require('multer');
 const path = require('path');
 
 // change la date de miliseconde en mode date + heure + minute
-let now = new Date().toISOString().slice(0, 16).replace("-", "").replace("-", "").replace("T", "").replace(/ /g, '').replace(/:/g, '').slice(0, -3);
-
-// Arrondir à 10 ou 100
-now = (parseInt(now) < 50) ? '50' : '100';
+let now = new Date().toISOString().slice(0, 16).replace("-", "").replace("-", "").replace("T", "").replace(/ /g, '').replace(/:/g, '');
 
 // Définir l'objet de stockage pour Multer
 const storage = multer.diskStorage({
+
+
   // Définir la destination pour les fichiers téléchargés
   destination: function (req, file, cb) {
     return cb(null, `${__dirname}/../client/public/uploads/posts/`);
@@ -32,4 +32,4 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 // Exporter l'objet Multer pour une utilisation ailleurs dans le code
-module.exports = upload;
+module.exports = upload
