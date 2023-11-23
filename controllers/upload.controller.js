@@ -12,7 +12,7 @@ const uploadController = {
 
         // récupere le chemin de l'image uploadée
         const file = req.file.filename;
-        console.log("{ picture }>>>>>>", file);
+        // console.log("{ picture }>>>>>>", file);
         
         try {
             const user = await UserModel.findByIdAndUpdate(
@@ -21,7 +21,7 @@ const uploadController = {
                 { new: true, upsert: true, setDefaultsOnInsert: true }
             );
 
-            console.log("user", user)
+            // console.log("user", user)
 
             if (!user) {
                 res.status(400).json({ message: "La photo n'a pas pu être enregistrée dans la base de données" });
@@ -41,7 +41,7 @@ const uploadController = {
      streamPicture(req, res) {
         const file = req.params.file;
         const filePath = `${__dirname}/../client/public/uploads/profil/${file}`;
-        console.log("file dans stream Picture", filePath);
+        // console.log("file dans stream Picture", filePath);
         fs.createReadStream(filePath).pipe(res);
       }
       

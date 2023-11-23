@@ -16,7 +16,7 @@ const createToken = (id) => {
 const authController =  {
     async signUp (req, res) {
         const { pseudo, email, password } = req.body;
-        console.log({pseudo, email, password });
+        // console.log({pseudo, email, password });
 
         try {
             const user = await UserModel.create({pseudo, email, password});
@@ -31,13 +31,13 @@ const authController =  {
 
     async login (req, res) {
         const { email, password } = req.body
-        console.log("{ email, password }", { email, password })
+        // console.log("{ email, password }", { email, password })
 
         try {
             // login vient de la methode userModel (tout en bas)
             const user = await UserModel.login(email, password);
 
-            console.log("user", user)
+            // console.log("user", user)
             const token = createToken(user._id)
             res.cookie('jwt', token, {httpOnly: true, maxAge: maxAge})
             res.status(200).json({user: user._id, userPseudo: user.pseudo})
