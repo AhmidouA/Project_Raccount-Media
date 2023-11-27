@@ -22,7 +22,7 @@ const postController = {
       console.log("posterId:", req.body.posterId);
 
       const file = req.file.filename;
-      console.log("{ picture }>>>>>>", file);
+      // console.log("{ picture }>>>>>>", file);
       let fileName;
       if (req.file != null ) {
         if (
@@ -40,7 +40,7 @@ const postController = {
       }
       // change la date de miliseconde en mode date + heure + minute
       let now = new Date().toISOString().slice(0, 16).replace("-", "").replace("-", "").replace("T", "").replace(/ /g, '').replace(/:/g, '');
-      console.log("now", now)
+      // console.log("now", now)
 
 
       fileName = req.body.posterId + now + ".jpg"
@@ -67,7 +67,7 @@ const postController = {
       async streamPicture(req, res) {
         const file = req.params.file;
         const filePath = `${__dirname}/../client/public/uploads/posts/${file}`;
-        console.log("file dans stream Picture Post.controller", filePath);
+        // console.log("file dans stream Picture Post.controller", filePath);
         fs.createReadStream(filePath).pipe(res);
       },
 
