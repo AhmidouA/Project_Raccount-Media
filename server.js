@@ -15,7 +15,7 @@ const cors = require("cors");
 // option pour mes request API (uniquement moi) => l'url peut etre le site web
 const corsOptions = {
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  origin: process.env.CLIENT_URL,
+  // origin: process.env.CLIENT_URL,
   credentials: true,
   'allowedHeaders': ['sessionId', 'Content-Type'],
   'exposedHeaders': ['sessionId'],
