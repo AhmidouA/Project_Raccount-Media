@@ -10,8 +10,7 @@ const auth = {
             jwt.verify(token, process.env.TOKEN_SECRET, async(err, decodedToken) => {
                 if (err) {
                     res.locals.user = null;
-                    res.cookie('jwt', '', {maxAge: 1});
-                    console.log("res.cookie", res.cookie)
+                    res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge });
                     next();
                 } else {
                     console.log("decodedToken dans auth middleware", decodedToken)
