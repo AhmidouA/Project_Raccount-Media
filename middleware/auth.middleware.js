@@ -11,6 +11,7 @@ const auth = {
                 if (err) {
                     res.locals.user = null;
                     res.cookie('jwt', '', {maxAge: 1});
+                    console.log("res.cookie", res.cookie)
                     next();
                 } else {
                     console.log("decodedToken dans auth middleware", decodedToken)
