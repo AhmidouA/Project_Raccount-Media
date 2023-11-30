@@ -16,7 +16,7 @@ const auth = {
                     console.log("decodedToken dans auth middleware", decodedToken)
                     let user = await UserModel.findById(decodedToken.id);
                     res.locals.user = user;
-                    // console.log("res.locals.user dans auth middleware", res.locals.user);
+                    console.log("res.locals.user dans auth middleware", res.locals.user);
                     next();
                 }
             })
