@@ -1,26 +1,25 @@
 const express = require("express");
-const app = express();
-
 // Cookies
 const cookieParser = require("cookie-parser");
 
 // dotenv files
-require("dotenv").config({ path: "./config/.env" });
+require('dotenv').config({path: './config/.env'});
 // mongoose config
 require("./config/db");
 
 // les cors pour l'appel a l'Api
 const cors = require("cors");
 
+const app = express();
+
 // option pour mes request API (uniquement moi) => l'url peut etre le site web
 const corsOptions = {
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  origin: 'http://localhost:3000',
+  origin: ['https://raccount-network.vercel.app', 'http://localhost:3000'],
   credentials: true,
-  allowedHeaders: ['sessionId', 'Content-Type'],
-  exposedHeaders: ['sessionId'],
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  preflightContinue: false
+  'allowedHeaders': ['sessionId', 'Content-Type'],
+  'exposedHeaders': ['sessionId'],
+  'methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  'preflightContinue': false
 }
 // middleware par default pour permettre d'appeler l'api (Uniquement ce qui ont le droit => client )
 app.use(cors(corsOptions));

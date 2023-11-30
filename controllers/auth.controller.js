@@ -39,8 +39,9 @@ const authController =  {
 
             console.log("user", user)
             const token = createToken(user._id)
-            res.cookie('jwt', token, {maxAge: maxAge})
-            res.status(200).json({user: user._id, userPseudo: user.pseudo})
+            console.log("token, ", token)
+            res.cookie('jwt', token, { httpOnly: true, maxAge});
+            res.status(200).json({user: user._id, userPseudo: user.pseudo, user_token:token})
 
         } catch (err) {
             console.error("err", err)
