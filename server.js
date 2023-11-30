@@ -15,12 +15,12 @@ const cors = require("cors");
 // option pour mes request API (uniquement moi) => l'url peut etre le site web
 const corsOptions = {
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  origin: 'https://raccount-network.vercel.app' || "http://localhost:3000/",
+  origin: ['https://raccount-network.vercel.app', 'http://localhost:3000'],
   credentials: true,
-  'allowedHeaders': ['sessionId', 'Content-Type'],
-  'exposedHeaders': ['sessionId'],
-  'methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  'preflightContinue': false
+  allowedHeaders: ['sessionId', 'Content-Type'],
+  exposedHeaders: ['sessionId'],
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  preflightContinue: false
 }
 // middleware par default pour permettre d'appeler l'api (Uniquement ce qui ont le droit => client )
 app.use(cors(corsOptions));
