@@ -42,9 +42,9 @@ const PORT = process.env.PORT || 5000;
 
 // jwt
 app.get("*", authMiddleware.checkUser);
-app.get("/jwtid", authMiddleware.requireAuth, (req, res) => {
-  res.status(200).json(res.locals.user._id);
-});
+// app.get("/jwtid", authMiddleware.requireAuth, (req, res) => {
+//   res.status(200).json(res.locals.user._id);
+// });
 
 // routes
 app.use("/api/user", userRouter);
