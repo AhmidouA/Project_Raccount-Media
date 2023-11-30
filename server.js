@@ -15,7 +15,7 @@ const cors = require("cors");
 // option pour mes request API (uniquement moi) => l'url peut etre le site web
 const corsOptions = {
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  origin: 'https://raccount-network.vercel.app',
+  origin: 'https://raccount-network.vercel.app' || "http://localhost:3000/",
   credentials: true,
   'allowedHeaders': ['sessionId', 'Content-Type'],
   'exposedHeaders': ['sessionId'],
