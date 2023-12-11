@@ -5,10 +5,12 @@ const {UserModel} = require('../models');
 const auth = {
     async checkUser (req, res, next) {
         const token = req.cookies.jwt;
+        console.log("token Dans checUser Auth", token)
 
         if (token) {
             jwt.verify(token, process.env.TOKEN_SECRET, async(err, decodedToken) => {
                 if (err) {
+                    console.log("Erreur dans la vérification du token", err);
                     res.locals.user = null;
                     res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge });
                     next();

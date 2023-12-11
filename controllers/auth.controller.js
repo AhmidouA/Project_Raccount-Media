@@ -37,9 +37,9 @@ const authController =  {
             // login vient de la methode userModel (tout en bas)
             const user = await UserModel.login(email, password);
 
-            console.log("user", user)
+            // console.log("user", user)
             const token = createToken(user._id)
-            // console.log("token, ", token)
+            console.log("token, ", token)
             res.cookie('jwt', token, { httpOnly: true, maxAge});
             res.status(200).json({user: user._id, userPseudo: user.pseudo, user_token:token})
 
