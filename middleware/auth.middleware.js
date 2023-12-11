@@ -10,6 +10,7 @@ const auth = {
         if (token) {
             jwt.verify(token, process.env.TOKEN_SECRET, async(err, decodedToken) => {
                 if (err) {
+                    console.log("Erreur dans la vérification du token", err);
                     res.locals.user = null;
                     res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge });
                     next();
