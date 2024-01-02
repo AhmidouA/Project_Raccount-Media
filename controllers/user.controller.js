@@ -11,7 +11,6 @@ const userController = {
   },
 
   async getUser(req, res) {
-    // console.log("req.params", req.params);
     if (!ObjectID.isValid(req.params.id)) {
       return res.status(400).json(`ID Inconnu: ${req.params.id}`);
     }
@@ -71,10 +70,6 @@ const userController = {
   },
 
   async follow(req, res) {
-    // console.log("req.params", req.params);
-    // console.log("req.body.idToFollow", req.body);
-
-    // Vérification si l'ID de l'utilisateur existe et si l'utilisateur que vous voulez suivre existe aussi
     if (
       !ObjectID.isValid(req.params.id) ||
       !ObjectID.isValid(req.body.idToFollow)
@@ -83,7 +78,6 @@ const userController = {
     }
 
     try {
-      // Ajouter l'utilisateur à la liste des following (les gens que je suis)
       const user = await UserModel.findByIdAndUpdate(req.params.id, {
         $addToSet: { following: req.body.idToFollow },
       });
@@ -92,7 +86,6 @@ const userController = {
         return res.status(404).json({ message: "User not found" });
       }
 
-      // Ajouter l'utilisateur à la liste des followers (les gens qui me suivent)
       const userFollowing = await UserModel.findByIdAndUpdate(
         req.body.idToFollow,
         { $addToSet: { followers: req.params.id } }
@@ -113,10 +106,6 @@ const userController = {
   },
 
   async unfollow(req, res) {
-    // console.log("req.params", req.params);
-    // console.log("req.body.idToUnFollow", req.body);
-
-    // Vérification si l'ID du user existe et si l'user que vous voulez unfollow existe aussi
     if (
       !ObjectID.isValid(req.params.id) ||
       !ObjectID.isValid(req.body.idToUnFollow)
@@ -125,7 +114,6 @@ const userController = {
     }
 
     try {
-      // Retirer l'utilisateur de la liste des followers (les gens que je suis)
       const user = await UserModel.findByIdAndUpdate(req.params.id, {
         $pull: { following: req.body.idToUnFollow },
       });
@@ -135,12 +123,10 @@ const userController = {
         return res.status(404).json({ message: "User not found" });
       }
 
-      // Retirer l'utilisateur de la liste des following (les gens qui me suivent)
       const userUnFollowing = await UserModel.findByIdAndUpdate(
         req.body.idToUnFollow,
         { $pull: { following: req.params.id } }
       );
-      // console.log("userUnFollowing", userUnFollowing);
 
       res.status(200).json({
         user: user.pseudo,
