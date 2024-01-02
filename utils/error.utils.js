@@ -5,17 +5,13 @@ module.exports.signUpErrors = (err) => {
   if (err.message.includes("pseudo"))
     errors.pseudo = "Pseudo incorrect ou déjà pris";
 
-  if (err.message.includes("email")) 
-    errors.email = "Email incorrect";
+  if (err.message.includes("email")) errors.email = "Email incorrect";
 
   if (err.message.includes("password"))
     errors.password = "Le mot de passe doit faire 6 caractères minimum";
 
-    // Object.keys = on vise juste les clés des object. err.keyValue = la clés de l'error
   if (err.code === 11000 && Object.keys(err.keyValue)[0].includes("pseudo"))
     errors.pseudo = "Ce pseudo est déjà pris";
-  // Plus précisément, le code d'erreur 11000 signifie qu'une opération d'insertion ou de mise à jour a tenté d'insérer ou 
-  // de mettre à jour une valeur qui viole la contrainte d'index unique. 
 
   if (err.code === 11000 && Object.keys(err.keyValue)[0].includes("email"))
     errors.email = "Cet email est déjà enregistré";
@@ -25,26 +21,25 @@ module.exports.signUpErrors = (err) => {
 
 // Error SignIn
 module.exports.signInErrors = (err) => {
-  let errors = {email: "", password: ""};
+  let errors = { email: "", password: "" };
 
-  if (err.message.includes("email"))
-    errors.email= "Email Inconnu"
-  
+  if (err.message.includes("email")) errors.email = "Email Inconnu";
+
   if (err.message.includes("password"))
-  errors.password = "Le mot de passe ne correspond pas"
+    errors.password = "Le mot de passe ne correspond pas";
 
-  return errors
-}
+  return errors;
+};
 
 // Error multer uplaod and stream
 module.exports.uploadErrors = (err) => {
-  let errors = {format: "", maxSize: ""}
+  let errors = { format: "", maxSize: "" };
 
   if (err.message.includes("invalid file"))
-    errors.format= "Format incompatible"
+    errors.format = "Format incompatible";
 
-    if (err.message.includes("max size"))
-    errors.maxSize= "Le ficher dépasse 500ko"
+  if (err.message.includes("max size"))
+    errors.maxSize = "Le ficher dépasse 500ko";
 
-  return errors
-}
+  return errors;
+};
